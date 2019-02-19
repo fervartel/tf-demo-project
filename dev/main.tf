@@ -10,6 +10,16 @@ provider "aws" {
   profile   = "${var.aws_profile}"   # Look for the profile in the shared credentials file (e.g. ~/.aws/credentials)
   region    = "${var.aws_region}"
 }
+# Terraform backend definition to store the "tfstate" remotely in S3
+/*
+terraform {
+  backend "s3" {
+    bucket = "mybucket"
+    key    = "tf-demo-project/dev/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+*/
 
 # Creation of VPC and associated network features
 module "dev-vpc" {
