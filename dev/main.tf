@@ -14,9 +14,13 @@ provider "aws" {
 /*
 terraform {
   backend "s3" {
-    bucket = "mybucket"
-    key    = "tf-demo-project/dev/terraform.tfstate"
-    region = "us-east-1"
+    bucket          = "mybucket"
+    key             = "tf-demo-project/dev/terraform.tfstate"
+    region          = "us-east-1"
+    # This is used to lock concurrent apply operations. It requires
+    # a DynamoDB table created with the name as below with a primary 
+    # key named "LockID"
+    dynamodb_table  = "terraform_state" 
   }
 }
 */
