@@ -7,6 +7,7 @@ provider "aws" {
 
   # Shared credentials file setup (default file: $HOME/.aws/credentials).
   #   'profile' argument is used when multiple accounts are managed in the same file
+  #shared_credentials_file = "${var.aws_shared_cred}"
   profile   = "${var.aws_profile}"   # Look for the profile in the shared credentials file (e.g. ~/.aws/credentials)
   region    = "${var.aws_region}"
 }

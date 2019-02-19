@@ -1,3 +1,6 @@
+/* variable "aws_shared_cred" {
+  default = "~/credentials"
+} */
 variable "aws_profile" {
   default = "default"
 }
