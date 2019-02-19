@@ -69,9 +69,11 @@ resource "aws_default_security_group" "default" {
 # Public subnets creation
 resource "aws_subnet" "tf-subnet-pub" {
   count = "${length(var.subnet_cidr_pub)}"
-  availability_zone = "${element(data.aws_availability_zones.azs.names, count.index)}"
+  #availability_zone = "${element(data.aws_availability_zones.azs.names, count.index)}"
+  availability_zone = "${data.aws_availability_zones.azs.names[count.index]}"
   vpc_id     = "${aws_vpc.tf-vpc.id}"
-  cidr_block = "${element(var.subnet_cidr_pub, count.index)}"
+  #cidr_block = "${element(var.subnet_cidr_pub, count.index)}"
+  cidr_block = "${var.subnet_cidr_pub[count.index]}"
   map_public_ip_on_launch = true
 
   tags = {
@@ -81,9 +83,11 @@ resource "aws_subnet" "tf-subnet-pub" {
 # Private subnets creation
 resource "aws_subnet" "tf-subnet-pri" {
   count = "${length(var.subnet_cidr_pri)}"
-  availability_zone = "${element(data.aws_availability_zones.azs.names, count.index)}"
+  #availability_zone = "${element(data.aws_availability_zones.azs.names, count.index)}"
+  availability_zone = "${data.aws_availability_zones.azs.names[count.index]}"
   vpc_id     = "${aws_vpc.tf-vpc.id}"
-  cidr_block = "${element(var.subnet_cidr_pri, count.index)}"
+  #cidr_block = "${element(var.subnet_cidr_pri, count.index)}"
+  cidr_block = "${var.subnet_cidr_pri[count.index]}"
 
   tags = {
     Name = "tf-subnet-pri-${count.index+1}"
@@ -127,13 +131,15 @@ resource "aws_route_table" "tf-rt-pri" {
 # Route Table association with Public Subnets
 resource "aws_route_table_association" "tf-rt-pub" {
     count = "${length(var.subnet_cidr_pub)}"
-    subnet_id = "${element(aws_subnet.tf-subnet-pub.*.id, count.index)}"
+    #subnet_id = "${element(aws_subnet.tf-subnet-pub.*.id, count.index)}"
+    subnet_id = "${aws_subnet.tf-subnet-pub.*.id[count.index]}"
     route_table_id = "${aws_route_table.tf-rt-pub.id}"
 }
 # Route Table association with Private Subnets
 resource "aws_route_table_association" "tf-rt-pri" {
     count = "${length(var.subnet_cidr_pri)}"
-    subnet_id = "${element(aws_subnet.tf-subnet-pri.*.id, count.index)}"
+    #subnet_id = "${element(aws_subnet.tf-subnet-pri.*.id, count.index)}"
+    subnet_id = "${aws_subnet.tf-subnet-pri.*.id[count.index]}"
     route_table_id = "${aws_route_table.tf-rt-pri.id}"
 }
 
