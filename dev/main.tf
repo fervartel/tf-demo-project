@@ -37,9 +37,8 @@ module "dev-vpc" {
     subnet_cidr_pri = ["192.168.1.128/26", "192.168.1.192/26"]
    
 }
-
+/* 
 # Creation of EC2 instance
-
 module "dev-ec2-pub" {
     source          = "../modules/ec2"
     ec2_env         = "dev"
@@ -51,4 +50,4 @@ module "dev-ec2-pub" {
     #ami             = "ami-0ac019f4fcb7cb7e6"  # By default it'll resolve from ubuntu Data Source
 
     ec2_subnet      = "${module.dev-vpc.subnets_pub[0]}"
-}
+} */
