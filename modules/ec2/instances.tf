@@ -7,6 +7,6 @@ resource "aws_instance" "tf-instance" {
   key_name 	    = "${var.ssh_key}"
 
   tags = {
-    Name = "tf-instance-${count.index+1}"
+    Name = "tf-instance-${count.index + 1}-${var.ec2_env}"
   }
 }

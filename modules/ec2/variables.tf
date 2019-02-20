@@ -1,6 +1,10 @@
+variable "ec2_env" {
+  default = ""
+}
 variable "instance_count" {
   default = "1"
 }
+# Enable this variable to pass the AMI ID as an argument
 /* variable "ami" {
   default = "ami-0ac019f4fcb7cb7e6"
 } */
@@ -13,6 +17,7 @@ variable "instance_type" {
 variable "ssh_key" {
   default = "fvarela-aws"
 }
+# This Data Source enables us to get the AMI list of a particular distro
 data "aws_ami" "ubuntu" {
   most_recent = true
 

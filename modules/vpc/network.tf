@@ -4,7 +4,7 @@ resource "aws_vpc" "tf-vpc"{
   instance_tenancy = "${var.vpc_tenancy}"
 
   tags = {
-    Name = "tf-vpc"
+    Name = "tf-vpc-${var.vpc_env}"
   }
 }
 # VPC Main ACL association (For layout purposes only. No rules created)
@@ -30,7 +30,7 @@ resource "aws_default_network_acl" "tf-acl-vpc" {
   }
  */
   tags = {
-    Name = "tf-acl-vpc"
+    Name = "tf-acl-vpc-${var.vpc_env}"
   }
 }
 # VPC Main Route Table association (For layout purposes only. No rules created)
@@ -42,7 +42,7 @@ resource "aws_default_route_table" "tf-rt-vpc" {
   }
  */
   tags = {
-    Name = "tf-rt-vpc"
+    Name = "tf-rt-vpc-${var.vpc_env}"
   }
 }
 # VPC Main Security Group association (For layout purposes only. No rules created)
@@ -63,7 +63,7 @@ resource "aws_default_security_group" "default" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "tf-sg-vpc"
+    Name = "tf-sg-vpc-${var.vpc_env}"
   }
 }
 # Public subnets creation
@@ -77,7 +77,7 @@ resource "aws_subnet" "tf-subnet-pub" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "tf-subnet-pub-${count.index+1}"
+    Name = "tf-subnet-pub-${count.index + 1}-${var.vpc_env}"
   }
 }
 # Private subnets creation
@@ -90,7 +90,7 @@ resource "aws_subnet" "tf-subnet-pri" {
   cidr_block = "${var.subnet_cidr_pri[count.index]}"
 
   tags = {
-    Name = "tf-subnet-pri-${count.index+1}"
+    Name = "tf-subnet-pri-${count.index + 1}-${var.vpc_env}"
   }
 }
 # Internet Gateway creation
@@ -98,7 +98,7 @@ resource "aws_internet_gateway" "tf-igw" {
   vpc_id = "${aws_vpc.tf-vpc.id}"
 
   tags = {
-    Name = "tf-igw"
+    Name = "tf-igw-${var.vpc_env}"
   }
 }
 # Public Routing Table creation
@@ -111,7 +111,7 @@ resource "aws_route_table" "tf-rt-pub" {
     }
 
     tags {
-        Name = "tf-rt-pub"
+        Name = "tf-rt-pub-${var.vpc_env}"
     }
 }
 # Private Routing Table creation (For layout purposes only. No NAT instance or NAT gateway created)
@@ -125,7 +125,7 @@ resource "aws_route_table" "tf-rt-pri" {
     }
  */
     tags {
-        Name = "tf-rt-pri"
+        Name = "tf-rt-pri-${var.vpc_env}"
     }
 }
 # Route Table association with Public Subnets

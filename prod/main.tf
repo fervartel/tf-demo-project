@@ -16,7 +16,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket          = "mybucket"
-    key             = "tf-demo-project/dev/terraform.tfstate"
+    key             = "tf-demo-project/prod/terraform.tfstate"
     region          = "us-east-1"
     # This is used to lock concurrent apply operations. It requires
     # a DynamoDB table created with the name as below with a primary 
@@ -27,22 +27,22 @@ terraform {
 */
 
 # Creation of VPC and associated network features
-module "dev-vpc" {
+module "prod-vpc" {
     source      = "../modules/vpc"
-    vpc_env         = "dev"
-    
-    vpc_cidr    = "192.168.1.0/24"
+    vpc_env         = "prod"
+    /*
+    vpc_cidr    = "192.168.0.0/24"
     vpc_tenancy     = "default"
-    subnet_cidr_pub = ["192.168.1.0/26", "192.168.1.64/26"]
-    subnet_cidr_pri = ["192.168.1.128/26", "192.168.1.192/26"]
-   
+    subnet_cidr_pub = ["192.168.0.0/26", "192.168.0.64/26"]
+    subnet_cidr_pri = ["192.168.0.128/26", "192.168.0.192/26"]
+    */
 }
 
 # Creation of EC2 instance
-
-module "dev-ec2-pub" {
+/* 
+module "prod-ec2-pub" {
     source          = "../modules/ec2"
-    ec2_env         = "dev"
+    ec2_env         = "dev
 
     #instance_count  = 1
     #instance_type   = "t2.micro"
@@ -50,5 +50,5 @@ module "dev-ec2-pub" {
 
     #ami             = "ami-0ac019f4fcb7cb7e6"  # By default it'll resolve from ubuntu Data Source
 
-    ec2_subnet      = "${module.dev-vpc.subnets_pub[0]}"
-}
+    ec2_subnet      = "${module.prod-vpc.subnets_pub[0]}"
+} */
