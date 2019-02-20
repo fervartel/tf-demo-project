@@ -1,20 +1,19 @@
-# Basic Ubuntu 18.04 setup with ZShell 
+# Basic Terraform template with VPC and EC2 examples
 
 ## Objectives
-The objective of this vagrant file is to spin up and provision a VirtualBox VM with the following especifications (USING SHELL SCRIPTS EMBEDDED IN THE VAGRANTFILE):
+The objective of this project is to demostrate the use of Terraform modules with AWS as provider for creating:
 
-- OS: ubuntu-18.04
-- Private IP: 10.0.0.3
-- Shell: ZShell + Oh My SZh (only for fun)
-- Basic Packages: GIT, Zsh
+- VPC
+- 2 Private and 2 Public subnets in 2 separate AZs
+- Association of Default ACL, Route Table, Security Group
+- Internet gateway
+- Route Table creation and association for both PRI and PUB subnets
+- Single EC2 instance deployment
 
 ## Requirements
 
-- [VirtualBox](https://www.virtualbox.org/)
-- [Vagrant](https://www.vagrantup.com/downloads.html)
+- [AWS account](https://aws.amazon.com/free/)
+- [Terraform](https://www.terraform.io/)
 
 ## Advantages
-The main advantage of using vagrant for this kind of testing environment is that it's blazing fast to deploy.  
-
-The addition of Zshell gives a new look to your terminal. The use of [Oh-My-Zsh](https://github.com/robbyrussell/oh-my-zsh) makes it really fun to use while adding some interesting visual features (especially when using GIT every day!)
-
+The main advantage of using Terraform as IaC provider is the fact of being Cloud agnostic with support for multiple Cloud (as other services) providers.
