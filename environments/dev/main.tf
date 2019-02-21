@@ -37,7 +37,7 @@ module "dev-vpc" {
 }
 
 # Creation of EC2 instance
-/* module "dev-ec2-pub" {
+module "dev-ec2-pub" {
     source          = "../../modules/ec2"
     ec2_env         = "dev"
 
@@ -48,4 +48,5 @@ module "dev-vpc" {
     #ami             = "ami-0ac019f4fcb7cb7e6"  # By default it'll resolve from ubuntu Data Source
 
     ec2_subnet      = "${module.dev-vpc.subnets_pub[0]}"
-} */
+    ec2_sg          = "${module.dev-vpc.sg_ssh}"
+}

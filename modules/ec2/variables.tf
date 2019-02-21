@@ -8,15 +8,6 @@ variable "instance_count" {
 /* variable "ami" {
   default = "ami-0ac019f4fcb7cb7e6"
 } */
-variable "ec2_subnet" {
-  default = ""
-}
-variable "instance_type" {
-  default = "t2.micro"
-}
-variable "ssh_key" {
-  default = "fvarela-aws"
-}
 # This Data Source enables us to get the AMI list of a particular distro
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -28,4 +19,16 @@ data "aws_ami" "ubuntu" {
   }
 
   owners = ["099720109477"] # Canonical
+}
+variable "instance_type" {
+  default = "t2.micro"
+}
+variable "ec2_subnet" {
+  default = ""
+}
+variable "ec2_sg" {
+  default = ""
+}
+variable "ssh_key" {
+  default = "fvarela-aws"
 }

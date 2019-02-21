@@ -10,25 +10,25 @@ resource "aws_vpc" "tf-vpc"{
 # VPC Main ACL association (For layout purposes only. No rules created)
 resource "aws_default_network_acl" "tf-acl-vpc" {
   default_network_acl_id = "${aws_vpc.tf-vpc.default_network_acl_id}"
-/* 
-  egress {
-    protocol   = "tcp"
-    rule_no    = 200
-    action     = "allow"
-    cidr_block = "10.3.0.0/18"
-    from_port  = 443
-    to_port    = 443
-  }
 
   ingress {
-    protocol   = "tcp"
-    rule_no    = 100
-    action     = "allow"
-    cidr_block = "10.3.0.0/18"
-    from_port  = 80
-    to_port    = 80
-  }
- */
+      protocol   = -1
+      rule_no    = 100
+      action     = "allow"
+      cidr_block = "0.0.0.0/0"
+      from_port  = 0
+      to_port    = 0
+    }
+
+    egress {
+      protocol   = -1
+      rule_no    = 100
+      action     = "allow"
+      cidr_block = "0.0.0.0/0"
+      from_port  = 0
+      to_port    = 0
+    }
+  
   tags = {
     Name = "tf-acl-vpc-${var.vpc_env}"
   }
@@ -142,10 +142,27 @@ resource "aws_route_table_association" "tf-rt-pri" {
     subnet_id = "${aws_subnet.tf-subnet-pri.*.id[count.index]}"
     route_table_id = "${aws_route_table.tf-rt-pri.id}"
 }
+# Custom Security group - SSH
+resource "aws_security_group" "tf-sg-ssh" {
+  name        = "tf-sg-ssh"
+  description = "Terraform created - Allow ssh inbound traffic"
+  vpc_id      = "${aws_vpc.tf-vpc.id}"
 
-# Outputs to be delivered by the module to the callers (e.g. dev -> main.tf)
-/* 
-output "vpc_id" {
-    value = "${aws_vpc.tf-vpc.id}"
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "tf-sg-ssh"
+  }
 }
- */
