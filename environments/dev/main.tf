@@ -8,7 +8,7 @@ provider "aws" {
   # Shared credentials file setup (default file: $HOME/.aws/credentials).
   #   'profile' argument is used when multiple accounts are managed in the same file
   #shared_credentials_file = "${var.aws_shared_cred}"
-  profile   = "${var.aws_profile}"   # Look for the profile in the shared credentials file (e.g. ~/.aws/credentials)
+  profile   = "${var.aws_profile}"   # Variable to search the profile in the shared credentials file (e.g. ~/.aws/credentials)
   region    = "${var.aws_region}"
 }
 # Terraform backend definition to store the "tfstate" remotely in S3
@@ -26,7 +26,7 @@ provider "aws" {
 
 # Creation of VPC and associated network features
 module "dev-vpc" {
-    source      = "../modules/vpc"
+    source      = "../../modules/vpc"
     vpc_env         = "dev"
     
     vpc_cidr    = "192.168.1.0/24"
@@ -35,10 +35,10 @@ module "dev-vpc" {
     subnet_cidr_pri = ["192.168.1.128/26", "192.168.1.192/26"]
    
 }
-/* 
+
 # Creation of EC2 instance
-module "dev-ec2-pub" {
-    source          = "../modules/ec2"
+/* module "dev-ec2-pub" {
+    source          = "../../modules/ec2"
     ec2_env         = "dev"
 
     #instance_count  = 1
