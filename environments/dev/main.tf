@@ -35,6 +35,13 @@ module "dev-vpc" {
     subnet_cidr_pri = ["192.168.1.128/26", "192.168.1.192/26"]
    
 }
+#Creation of SSH SG
+module "dev-sg-ssh" {
+    source      = "../../modules/sg-ssh"
+    sg_env      = "dev"
+
+    sg_vpc_id   = "${module.dev-vpc.vpc_id}"
+}
 
 # Creation of EC2 instance
 module "dev-ec2-pub" {
@@ -48,5 +55,5 @@ module "dev-ec2-pub" {
     #ami             = "ami-0ac019f4fcb7cb7e6"  # By default it'll resolve from ubuntu Data Source
 
     ec2_subnet      = "${module.dev-vpc.subnets_pub[0]}"
-    ec2_sg          = "${module.dev-vpc.sg_ssh}"
+    ec2_sg          = "${module.dev-sg-ssh.ssh_sg}"
 }
