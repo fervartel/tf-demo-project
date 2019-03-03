@@ -55,5 +55,5 @@ module "dev-ec2-pub" {
     #ami             = "ami-0ac019f4fcb7cb7e6"  # By default it'll resolve from ubuntu Data Source
 
     ec2_subnet      = "${module.dev-vpc.subnets_pub[0]}"
-    ec2_sg          = "${module.dev-sg-ssh.ssh_sg}"
+    ec2_sg          = "${module.dev-sg-ssh.sg_ssh}"
 }
