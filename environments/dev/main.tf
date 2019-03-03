@@ -35,11 +35,16 @@ module "dev-vpc" {
     subnet_cidr_pri = ["192.168.1.128/26", "192.168.1.192/26"]
    
 }
-#Creation of SSH SG
+# Creation of SSH SG
 module "dev-sg-ssh" {
     source      = "../../modules/sg-ssh"
-    sg_env      = "dev"
-
+    
+    sg_vpc_id   = "${module.dev-vpc.vpc_id}"
+}
+# Creation of MySQL SG
+module "dev-sg-mysql" {
+    source      = "../../modules/sg-mysql"
+    
     sg_vpc_id   = "${module.dev-vpc.vpc_id}"
 }
 

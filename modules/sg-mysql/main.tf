@@ -1,12 +1,12 @@
-# Custom Security group - SSH
-resource "aws_security_group" "tf-sg-ssh" {
-  name        = "tf-sg-ssh"
-  description = "Terraform created - Allow ssh inbound traffic"
+# Custom Security group - MySQL
+resource "aws_security_group" "tf-sg-mysql" {
+  name        = "tf-sg-mysql"
+  description = "Terraform created - Allow MySQL inbound traffic"
   vpc_id      = "${var.sg_vpc_id}"
 
   ingress {
-    from_port   = 22
-    to_port     = 22
+    from_port   = 3306
+    to_port     = 3306
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -19,6 +19,6 @@ resource "aws_security_group" "tf-sg-ssh" {
   }
 
   tags = {
-    Name = "tf-sg-ssh"
+    Name = "tf-sg-mysql"
   }
 }
