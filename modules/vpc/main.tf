@@ -48,7 +48,6 @@ resource "aws_default_route_table" "tf-rt-vpc" {
 # VPC Main Security Group association (For layout purposes only. No rules created)
 resource "aws_default_security_group" "default" {
   vpc_id = "${aws_vpc.tf-vpc.id}"
-  description = "Terraform created - Default VPC SG"
   
   ingress {
     protocol  = -1
