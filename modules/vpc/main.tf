@@ -1,7 +1,8 @@
 # VPC creation
 resource "aws_vpc" "tf-vpc"{
-  cidr_block       = "${var.vpc_cidr}"
-  instance_tenancy = "${var.vpc_tenancy}"
+  cidr_block            = "${var.vpc_cidr}"
+  instance_tenancy      = "${var.vpc_tenancy}"
+  enable_dns_hostnames  = true
 
   tags = {
     Name = "tf-vpc-${var.vpc_env}"

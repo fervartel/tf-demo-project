@@ -53,6 +53,15 @@ module "dev-db-sn-grp" {
 
     db-sn-grp_subnets = "${module.dev-vpc.subnets_pub}"
 }
+# Creation of RDS MySQL DB
+module "dev-rds-mysql" {
+    source              = "../../modules/rds-mysql"
+    rds-mysql_env       = "dev"
+
+    rds-mysql_db-sn-grp = "${module.dev-db-sn-grp.db_sn_grp}"
+    rds-mysql_sg        = "${module.dev-sg-mysql.sg_mysql}"
+}
+
 # Creation of EC2 instance
 # module "dev-ec2-pub" {
 #     source          = "../../modules/ec2"
