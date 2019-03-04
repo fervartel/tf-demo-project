@@ -23,7 +23,6 @@ provider "aws" {
     dynamodb_table  = "terraform_state_dev" 
   }
 } */
-
 # Creation of VPC and associated network features
 module "dev-vpc" {
     source      = "../../modules/vpc"
@@ -47,18 +46,24 @@ module "dev-sg-mysql" {
     
     sg_vpc_id   = "${module.dev-vpc.vpc_id}"
 }
+# Creation of DB Subnet Group
+module "dev-db-sn-grp" {
+    source            = "../../modules/db-sn-grp"
+    db-sn-grp_env     = "dev"
 
-# Creation of EC2 instance
-module "dev-ec2-pub" {
-    source          = "../../modules/ec2"
-    ec2_env         = "dev"
-
-    #instance_count  = 1
-    #instance_type   = "t2.micro"
-    #ssh_key         = "fvarela-aws"
-
-    #ami             = "ami-0ac019f4fcb7cb7e6"  # By default it'll resolve from ubuntu Data Source
-
-    ec2_subnet      = "${module.dev-vpc.subnets_pub[0]}"
-    ec2_sg          = "${module.dev-sg-ssh.sg_ssh}"
+    db-sn-grp_subnets = "${module.dev-vpc.subnets_pub}"
 }
+# Creation of EC2 instance
+# module "dev-ec2-pub" {
+#     source          = "../../modules/ec2"
+#     ec2_env         = "dev"
+
+#     #instance_count  = 1
+#     #instance_type   = "t2.micro"
+#     #ssh_key         = "fvarela-aws"
+
+#     #ami             = "ami-0ac019f4fcb7cb7e6"  # By default it'll resolve from ubuntu Data Source
+
+#     ec2_subnet      = "${module.dev-vpc.subnets_pub[0]}"
+#     ec2_sg          = "${module.dev-sg-ssh.sg_ssh}"
+# }
