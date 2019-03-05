@@ -1,7 +1,7 @@
-# Basic Terraform template with VPC and EC2 examples
+# Basic Terraform template with VPC, EC2 and RDS examples
 
 ## Objectives
-The objective of this project is to demostrate the use of Terraform modules with AWS as provider for creating:
+The objective of this project is to demostrate how to use Terraform modules with AWS for creating:
 
 - VPC
 - 2 Private and 2 Public subnets in 2 separate AZs
@@ -9,6 +9,8 @@ The objective of this project is to demostrate the use of Terraform modules with
 - Internet gateway
 - Route Table creation and association for both PRI and PUB subnets
 - Single EC2 instance deployment
+- DB Subnet group creation
+- RDS MySQL instance creation
 
 ## Requirements
 
