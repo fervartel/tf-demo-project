@@ -47,6 +47,16 @@ module "dev-sg-http" {
     sg_vpc_id   = "${module.dev-vpc.vpc_id}"
 }
 
+# Creation of Auto-Scaling Group
+module "dev-asg" {
+    source      = "../../modules/asg"
+    
+    instance_type   = "t2.micro"
+    ssh_key         = "fvarela-aws"
+    security_groups = ["${module.dev-sg-ssh.sg_ssh}", "${module.dev-sg-http.sg_http}"]
+    subnets  = ["${module.dev-vpc.subnets_pub[0]}", "${module.dev-vpc.subnets_pub[1]}"]
+}
+
 # # Creation of MySQL SG
 # module "dev-sg-mysql" {
 #     source      = "../../modules/sg-mysql"
