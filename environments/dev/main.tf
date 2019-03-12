@@ -40,29 +40,29 @@ module "dev-sg-ssh" {
     
     sg_vpc_id   = "${module.dev-vpc.vpc_id}"
 }
-# Creation of MySQL SG
-module "dev-sg-mysql" {
-    source      = "../../modules/sg-mysql"
+# # Creation of MySQL SG
+# module "dev-sg-mysql" {
+#     source      = "../../modules/sg-mysql"
     
-    sg_vpc_id   = "${module.dev-vpc.vpc_id}"
-}
-# Creation of DB Subnet Group
-module "dev-db-sn-grp" {
-    source            = "../../modules/db-sn-grp"
-    db-sn-grp_env     = "dev"
+#     sg_vpc_id   = "${module.dev-vpc.vpc_id}"
+# }
+# # Creation of DB Subnet Group
+# module "dev-db-sn-grp" {
+#     source            = "../../modules/db-sn-grp"
+#     db-sn-grp_env     = "dev"
 
-    db-sn-grp_subnets = "${module.dev-vpc.subnets_pub}"
-}
-# Creation of RDS MySQL DB
-module "dev-rds-mysql" {
-    source              = "../../modules/rds-mysql"
-    rds-mysql_env       = "dev"
+#     db-sn-grp_subnets = "${module.dev-vpc.subnets_pub}"
+# }
+# # Creation of RDS MySQL DB
+# module "dev-rds-mysql" {
+#     source              = "../../modules/rds-mysql"
+#     rds-mysql_env       = "dev"
 
-    rds-mysql_db-sn-grp = "${module.dev-db-sn-grp.db_sn_grp}"
-    rds-mysql_sg        = "${module.dev-sg-mysql.sg_mysql}"
-}
+#     rds-mysql_db-sn-grp = "${module.dev-db-sn-grp.db_sn_grp}"
+#     rds-mysql_sg        = "${module.dev-sg-mysql.sg_mysql}"
+# }
 
-# Creation of EC2 instance
+# # Creation of Single EC2 instance
 # module "dev-ec2-pub" {
 #     source          = "../../modules/ec2"
 #     ec2_env         = "dev"
