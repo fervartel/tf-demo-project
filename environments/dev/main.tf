@@ -40,6 +40,13 @@ module "dev-sg-ssh" {
     
     sg_vpc_id   = "${module.dev-vpc.vpc_id}"
 }
+# Creation of HTTP-HTTPS SG
+module "dev-sg-http" {
+    source      = "../../modules/sg-http"
+    
+    sg_vpc_id   = "${module.dev-vpc.vpc_id}"
+}
+
 # # Creation of MySQL SG
 # module "dev-sg-mysql" {
 #     source      = "../../modules/sg-mysql"
