@@ -47,15 +47,28 @@ module "dev-sg-http" {
     sg_vpc_id   = "${module.dev-vpc.vpc_id}"
 }
 
+module "dev-elb" {
+    source          = "../../modules/elb"
+    
+    elb_vpc_id          = "${module.dev-vpc.vpc_id}"
+    elb_target_type     = "instance"
+    elb_protocol        = "HTTP"
+    elb_port            = "80"
+    elb_scheme_internal = "false"
+    elb_type            = "application"
+    elb_sg              = ["${module.dev-sg-http.sg_http}"]
+    elb_sn              = ["${module.dev-vpc.subnets_pub[0]}", "${module.dev-vpc.subnets_pub[1]}"]
+}
+
 # Creation of Auto-Scaling Group
 module "dev-asg" {
-    source      = "../../modules/asg"
+    source              = "../../modules/asg"
     
-    instance_type   = "t2.micro"
-    ssh_key         = "fvarela-aws"
-    security_groups = ["${module.dev-sg-ssh.sg_ssh}", "${module.dev-sg-http.sg_http}"]
-    subnets  = ["${module.dev-vpc.subnets_pub[0]}", "${module.dev-vpc.subnets_pub[1]}"]
-}
+    instance_type       = "t2.micro"
+    ssh_key             = "fvarela-aws"
+    security_groups     = ["${module.dev-sg-ssh.sg_ssh}", "${module.dev-sg-http.sg_http}"]
+    subnets             = ["${module.dev-vpc.subnets_pub[0]}", "${module.dev-vpc.subnets_pub[1]}"]
+    asg_lb_target_group =["${module.dev-elb.elb_tg_arn}"]}
 
 # # Creation of MySQL SG
 # module "dev-sg-mysql" {

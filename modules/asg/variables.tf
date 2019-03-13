@@ -19,8 +19,11 @@ variable "security_groups" {
   type = "list"
   default = []
 }
-
 variable "subnets" {
+  type = "list"
+  default = []
+}
+variable "asg_lb_target_group" {
   type = "list"
   default = []
 }

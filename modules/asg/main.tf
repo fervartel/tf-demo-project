@@ -9,13 +9,13 @@ resource "aws_launch_template" "tf-launch-template" {
       Name = "tf-launch-template"
     }
 }
-
 resource "aws_autoscaling_group" "tf-asg" {
   name                  = "tf-asg"
   desired_capacity      = 2
   min_size              = 2
   max_size              = 4
   vpc_zone_identifier   = ["${var.subnets[0]}", "${var.subnets[1]}"]
+  target_group_arns     = ["${var.asg_lb_target_group}"]
 
   launch_template {
     id      = "${aws_launch_template.tf-launch-template.id}"
@@ -23,5 +23,17 @@ resource "aws_autoscaling_group" "tf-asg" {
   }
   lifecycle {
     create_before_destroy = true
+  }
+}
+resource "aws_autoscaling_policy" "tf-asg-policy" {
+  name                    = "tf-asg-policy"
+  autoscaling_group_name  = "${aws_autoscaling_group.tf-asg.name}"
+  policy_type             = "TargetTrackingScaling"  
+  
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ASGAverageCPUUtilization"
+    }
+    target_value = 40.0
   }
 }
