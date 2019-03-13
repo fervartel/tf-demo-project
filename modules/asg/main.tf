@@ -1,3 +1,4 @@
+# Creates the Launch Template that will be used by the ASG to get the instance's details
 resource "aws_launch_template" "tf-launch-template" {
   name_prefix     = "tf-lt-"
   image_id        = "${data.aws_ami.ubuntu.id}"
@@ -9,6 +10,7 @@ resource "aws_launch_template" "tf-launch-template" {
       Name = "tf-launch-template"
     }
 }
+# Creates the Auto-Scaling group
 resource "aws_autoscaling_group" "tf-asg" {
   name                  = "tf-asg"
   desired_capacity      = 2
@@ -25,6 +27,7 @@ resource "aws_autoscaling_group" "tf-asg" {
     create_before_destroy = true
   }
 }
+# Creates the policy to Scale-out / Scale-in. It looks for an average CPU of 40% across the board
 resource "aws_autoscaling_policy" "tf-asg-policy" {
   name                    = "tf-asg-policy"
   autoscaling_group_name  = "${aws_autoscaling_group.tf-asg.name}"

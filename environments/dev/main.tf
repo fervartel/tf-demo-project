@@ -46,7 +46,7 @@ module "dev-sg-http" {
     
     sg_vpc_id   = "${module.dev-vpc.vpc_id}"
 }
-
+# Creation of an Application Load Balancer
 module "dev-elb" {
     source          = "../../modules/elb"
     
@@ -54,7 +54,7 @@ module "dev-elb" {
     elb_target_type     = "instance"
     elb_protocol        = "HTTP"
     elb_port            = "80"
-    elb_scheme_internal = "false"
+    elb_scheme_internal = "false"       #Internet facing
     elb_type            = "application"
     elb_sg              = ["${module.dev-sg-http.sg_http}"]
     elb_sn              = ["${module.dev-vpc.subnets_pub[0]}", "${module.dev-vpc.subnets_pub[1]}"]
