@@ -1,4 +1,4 @@
-# Basic Terraform template with VPC, EC2 and RDS examples
+# Terraform template with VPC, ELB and ASG
 
 ## Objectives
 The objective of this project is to demostrate how to use Terraform modules with AWS for creating:
@@ -8,14 +8,14 @@ The objective of this project is to demostrate how to use Terraform modules with
 - Association of Default ACL, Route Table, Security Group
 - Internet gateway
 - Route Table creation and association for both PRI and PUB subnets
-- Single EC2 instance deployment
-- DB Subnet group creation
-- RDS MySQL instance creation
+- Auto-Scaling group
+- Application Load Balancer
 
 ## Requirements
 
 - [AWS account](https://aws.amazon.com/free/)
 - [Terraform](https://www.terraform.io/)
+- [tf-modules](https://github.com/fervartel/tf-modules)
 
 ## Advantages
 The main advantage of using Terraform as IaC provider is the fact of being Cloud agnostic with support for multiple Cloud (as other services) providers.
