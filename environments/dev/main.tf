@@ -63,7 +63,7 @@ module "dev-asg" {
     source              = "../../../tf-modules/asg"
     
     instance_type       = "t2.micro"
-    ssh_key             = "fvarela-aws"
+    ssh_key             = "fvarela-aws-hotmail"
     security_groups     = ["${module.dev-sg-ssh.sg_ssh}", "${module.dev-sg-http.sg_http}"]
     subnets             = ["${module.dev-vpc.subnets_pub[0]}", "${module.dev-vpc.subnets_pub[1]}"]
     asg_lb_target_group =["${module.dev-elb.elb_tg_arn}"]
